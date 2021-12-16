@@ -27,6 +27,9 @@ $$\Gamma^a_b = \{R(s_0,a) + \sum_{o\in O}\alpha_{i(b,o)}^{a,o}(s_0),R(s_1,a) + \
 $$a(b) = arg \max_{a\in A}(\Gamma^a_b\cdot b)$$
 $$\alpha_i(s) = \Gamma^{a(b)}_b(i,s)$$
 
+
+### Step 4
+根据最终的观测点结果进行模拟的决策过程
 ### 整合
 
 对于所有step的内容进行连接，并搭建测试框架
