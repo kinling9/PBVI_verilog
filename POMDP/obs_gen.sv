@@ -6,11 +6,14 @@ module obs_gen(
   input logic state,
   input logic [15:0] random,
   input logic [15:0] observe [2:0][1:0][1:0],
-  output logic observation
+  output logic observation,
+  output logic en_belief
 );
 
 parameter STATE_INIT = 3'b000;
 parameter STATE_STOP = 3'b001;
+
+logic [2:0] state;
 
 always_ff @(posedge clk or negedge rst_n) begin
   if(!rst_n) begin
@@ -26,9 +29,11 @@ end
 
 always_comb begin
   if (state == STATE_INIT) begin
-    observation = (random < observation[action][state][0]) ? 1'b0 : 1'b1;
+    observation = (random < observe[action][state][0]) ? 1'b0 : 1'b1;
+    en_belief = 1'b1;
+  end else if (state == STATE_STOP) begin
+    en_belief = 1'b0;
   end
-end
 end
 
 endmodule

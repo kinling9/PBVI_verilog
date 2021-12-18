@@ -29,6 +29,5 @@ always_comb begin
     new_state = (random < trans[action][state][0]) ? 1'b0 : 1'b1;
   end
 end
-end
 
 endmodule
