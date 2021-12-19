@@ -2,7 +2,6 @@
 module step3_tb ();
 reg clk;
 reg en;
-wire action;
 
 initial 
 begin
@@ -16,7 +15,6 @@ always#100 clk=~clk;
 step3 dut
 (
     .clk(clk),
-    .en(en),
-    .action(action)
+    .en(en)
 );
 endmodule
