@@ -8,7 +8,7 @@ module PBVI_belief (
   input logic [1:0] action,
   input logic observation,
   output logic [15:0] renew_belief [1:0],
-  output logic en_state
+  output logic en_decision
 );
 
 parameter STATE_INIT = 3'b000;
@@ -46,7 +46,7 @@ always_comb begin
     for (int i = 0; i < 2; ++i) begin
       renew_belief[i] = o_belief[i] / belief_total;
     end
-    en_state = 1'b1;
+    en_decision = 1'b1;
   end
   default: begin
     belief_total = 16'b0;
@@ -55,7 +55,7 @@ always_comb begin
       o_belief[i] = 16'b0;
       renew_belief[i] = renew_belief[i];
     end
-    en_state = 1'b0;
+    en_decision = 1'b0;
   end
   endcase  
 end

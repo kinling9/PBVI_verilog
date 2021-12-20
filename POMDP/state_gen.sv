@@ -5,9 +5,11 @@ module state_gen (
   input logic cur_state,
   input logic [1:0] action,
   input logic [15:0] random,
+  input logic [15:0] vec_reward [2:0][1:0],
   input logic [15:0] trans [2:0][1:0][1:0],
+  output logic [15:0] out_reward,
   output logic new_state,
-  output logic en_next
+  output logic en_calculate
 );
 
 parameter STATE_INIT = 3'b000;
@@ -30,9 +32,10 @@ end
 always_comb begin
   if (state == STATE_INIT) begin
     new_state = (random < trans[action][cur_state][0]) ? 1'b0 : 1'b1;
-    en_next = 1'b1;
+    out_reward = vec_reward[action][cur_state];
+    en_calculate = 1'b1;
   end else if (state == STATE_STOP) begin
-    en_next = 1'b0;
+    en_calculate = 1'b0;
   end
 end
 
