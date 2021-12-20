@@ -5,8 +5,8 @@ module state_gen (
   input logic cur_state,
   input logic [1:0] action,
   input logic [15:0] random,
-  input logic [15:0] vec_reward [2:0][1:0],
-  input logic [15:0] trans [2:0][1:0][1:0],
+  input logic [15:0] vec_reward [0:2][0:1],
+  input logic [15:0] trans [0:2][0:1][0:1],
   output logic [15:0] out_reward,
   output logic new_state,
   output logic en_calculate

@@ -11,32 +11,32 @@ module sim_top (
   input initial_state,
   input logic [15:0] seed0,
   input logic [15:0] seed1,
-  input logic [15:0] alpha [15:0][1:0],
-  input logic [15:0] vec_reward [2:0][1:0],
-  input logic [1:0] point_action [15:0],
-  input logic [15:0] trans [2:0][1:0][1:0],
-  input logic [15:0] observe [2:0][1:0][1:0],
-  input logic [15:0] initial_belief [1:0],
+  input logic [15:0] alpha [0:15][0:1],
+  input logic [15:0] vec_reward [0:2][0:1],
+  input logic [1:0] point_action [0:15],
+  input logic [15:0] trans [0:2][0:1][0:1],
+  input logic [15:0] observe [0:2][0:1][0:1],
+  input logic [15:0] initial_belief [0:1],
   output logic [1:0] action,
-  output logic nxt_state,
+  output logic observation,
+  output logic cur_state,
   output logic [31:0] reward
 );
 
 
 
 parameter STATE_INIT = 3'b000;
-// parameter STATE_LEVELT = 3'b001;
+parameter STATE_WAIT = 3'b001;
 // parameter STATE_LEVELO = 3'b010;
 // parameter STATE_LEVELN = 3'b011;
-parameter STATE_STOP = 3'b001;
+parameter STATE_STOP = 3'b010;
 
 logic [2:0] state;
 logic en_decision;
 logic en_belief_out;
-logic cur_state;
 logic out_state;
-logic [15:0] current_belief [1:0];
-logic [15:0] out_belief [1:0];
+logic [15:0] current_belief [0:1];
+logic [15:0] out_belief [0:1];
 logic [15:0] out_random0;
 logic [15:0] out_random1;
 logic [15:0] out_reward;
@@ -45,6 +45,12 @@ logic en_trans;
 logic en_belief;
 logic en_calculate;
 
+logic [15:0] out_belief0;
+logic [15:0] out_belief1;
+
+assign out_belief0 = out_belief[0];
+assign out_belief1 = out_belief[1];
+
 always_ff @(posedge clk or negedge rst_n) begin
   if(!rst_n) begin
     state <= STATE_STOP;
@@ -52,20 +58,26 @@ always_ff @(posedge clk or negedge rst_n) begin
     state <= STATE_INIT;
   end else if (state == STATE_STOP) begin
     state <= STATE_STOP;
-  end else begin
+  end else if (state == STATE_INIT)begin
     state <= state + 1; 
+  end else if (en_belief_out) begin
+    state <= state + 1;
   end
 end
 
-always_comb begin
+always_ff @(posedge clk or negedge rst_n) begin
   if (state == STATE_INIT) begin
-    en_decision = 1'b1;
-    cur_state = initial_state;
-    current_belief = initial_belief;
+    en_decision <= 1'b1;
+    cur_state <= initial_state;
+    current_belief <= initial_belief;
+  end else if (state == STATE_WAIT) begin
+    en_decision <= 1'b0;
+    cur_state <= initial_state;
+    current_belief <= initial_belief;
   end else begin
-    en_decision = en_belief_out;
-    cur_state = out_state;
-    current_belief = out_belief;
+    en_decision <= en_belief_out;
+    cur_state <= out_state;
+    current_belief <= out_belief;
   end
 end
 
@@ -84,7 +96,7 @@ PBVI_decision mod_decision (
   .en(en_decision),
   .alpha(alpha),
   .point_action(point_action),
-  .current_belief(),
+  .current_belief(current_belief),
   .out_action(action),
   .en_obs(en_trans)
 );

@@ -12,7 +12,7 @@ module tb_obs_gen;
   logic en;
   logic [1:0] action;
   logic [15:0] random;
-  logic [15:0] observe [2:0][1:0][1:0];
+  logic [15:0] observe [0:2][0:1][0:1];
   logic observation;
   logic en_belief;
 

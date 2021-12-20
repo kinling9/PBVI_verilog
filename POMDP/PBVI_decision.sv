@@ -2,9 +2,9 @@ module PBVI_decision(
   input logic clk,
   input logic rst_n,
   input logic en,
-  input logic [15:0] alpha [15:0][1:0],
-  input logic [1:0] point_action [15:0],
-  input logic [15:0] current_belief [1:0],
+  input logic [15:0] alpha [0:15][0:1],
+  input logic [1:0] point_action [0:15],
+  input logic [15:0] current_belief [0:1],
   output logic [1:0] out_action,
   output logic en_obs
 );
@@ -17,10 +17,10 @@ parameter STATE_LEVEL4 = 3'b100;
 parameter STATE_STOP = 3'b101;
 
 logic [2:0] state;
-logic [15:0] reward [15:0];
-logic [3:0] action [15:0];
-logic [15:0] sel_reward [15:0];
-logic [3:0] sel_action [7:0];
+logic [31:0] reward [0:15];
+logic [3:0] action [0:15];
+logic [31:0] sel_reward [0:15];
+logic [3:0] sel_action [0:7];
 
 // set the state change
 always_ff @(posedge clk or negedge rst_n) begin
@@ -40,6 +40,7 @@ always_comb begin
   if (state == STATE_INIT) begin
     for(integer i = 0; i < 16; ++i) begin
       reward[i] = current_belief[0] * alpha[i][0] + current_belief[1] * alpha[i][1];
+      action[i] = i;
     end
   end
 end
