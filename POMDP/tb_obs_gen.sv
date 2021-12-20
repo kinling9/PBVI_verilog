@@ -11,7 +11,6 @@ module tb_obs_gen;
   logic rst_n;
   logic en;
   logic [1:0] action;
-  logic state;
   logic [15:0] random;
   logic [15:0] observe [2:0][1:0][1:0];
   logic observation;
@@ -36,17 +35,17 @@ module tb_obs_gen;
   initial begin
     clk = 1'b0;
     rst_n = 1'b1;
-    random = 16'h7000;
+    random = 16'h9000;
     action = 2'b10;
-    observe = {{{16'h8000,16'h8000},{16'h8000,16'h8000}},
-               {{16'h8000,16'h8000},{16'h8000,16'h8000}},
-               {{16'h8000,16'h8000},{16'h8000,16'h8000}}};
+    observe = '{'{{16'h8000,16'h8000},{16'h8000,16'h8000}},
+                '{{16'h8000,16'h8000},{16'h8000,16'h8000}},
+                '{{16'h8000,16'h8000},{16'h8000,16'h8000}}};
     en = 1;
-    #5;
+    #45;
     rst_n = 1'b0;
     #5;
     rst_n = 1'b1;
-    #20;
+    #40;
     en = 0;
   end
 
@@ -58,7 +57,7 @@ module tb_obs_gen;
   always@(posedge clk) begin
 		counter_finish = counter_finish + 1;
 		
-		if(counter_finish == 5) $finish;
+		if(counter_finish == 10) $finish;
 	end
 
   always @(posedge clk) begin
@@ -66,5 +65,10 @@ module tb_obs_gen;
     $display("obs %d : %d\n" ,counter_finish, observation);
     $display("en_belief %d : %d\n" ,counter_finish, en_belief);
   end
+
+  initial begin
+		$dumpfile("obs_gen.fsdb");
+		$dumpvars(0, obs_gen, tb_obs_gen);
+	end
 
 endmodule

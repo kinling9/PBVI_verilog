@@ -5,7 +5,8 @@ module PBVI_decision(
   input logic [15:0] alpha [15:0][1:0],
   input logic [1:0] point_action [15:0],
   input logic [15:0] current_belief [1:0],
-  output logic [1:0] action
+  output logic [1:0] out_action,
+  output logic en_obs
 );
 
 parameter STATE_INIT = 3'b000;
@@ -29,7 +30,7 @@ always_ff @(posedge clk or negedge rst_n) begin
     state <= STATE_INIT;
   end else if (state == STATE_STOP) begin
     state <= STATE_STOP;
-  end begin
+  end else begin
     state <= state + 1; 
   end
 end
@@ -37,9 +38,8 @@ end
 // calculate the reward
 always_comb begin
   if (state == STATE_INIT) begin
-    for(unsigned int i = 0; i < 16; ++i) begin
+    for(integer i = 0; i < 16; ++i) begin
       reward[i] = current_belief[0] * alpha[i][0] + current_belief[1] * alpha[i][1];
-      sel_action = i;
     end
   end
 end
@@ -48,41 +48,43 @@ always_comb begin
   case(state)
     // initial state : get the value from the inital reward
     STATE_LEVEL1: begin
-      for(unsigned int i = 0; i < 8; ++i) begin
+      for(int i = 0; i < 8; ++i) begin
         sel_reward[i] <= (reward[2*i] >= reward[2*i+1]) ? reward[2*i] : reward[2*i+1];
         sel_action[i] <= (reward[2*i] >= reward[2*i+1]) ? action[2*i] : action[2*i+1];
       end
     end
     STATE_LEVEL2: begin
-      for(unsigned int i = 0; i < 4; ++i) begin
+      for(int i = 0; i < 4; ++i) begin
         sel_reward[i] <= (sel_reward[2*i] >= sel_reward[2*i+1]) ? sel_reward[2*i] : sel_reward[2*i+1];
         sel_action[i] <= (sel_reward[2*i] >= sel_reward[2*i+1]) ? sel_action[2*i] : sel_action[2*i+1];
       end
     end
     STATE_LEVEL3: begin
-      for(unsigned int i = 0; i < 2; ++i) begin
+      for(int i = 0; i < 2; ++i) begin
         sel_reward[i] <= (sel_reward[2*i] >= sel_reward[2*i+1]) ? sel_reward[2*i] : sel_reward[2*i+1];
         sel_action[i] <= (sel_reward[2*i] >= sel_reward[2*i+1]) ? sel_action[2*i] : sel_action[2*i+1];
       end
     end
     STATE_LEVEL4: begin
-      for(unsigned int i = 0; i < 1; ++i) begin
+      for(int i = 0; i < 1; ++i) begin
         sel_reward[i] <= (sel_reward[2*i] >= sel_reward[2*i+1]) ? sel_reward[2*i] : sel_reward[2*i+1];
         sel_action[i] <= (sel_reward[2*i] >= sel_reward[2*i+1]) ? sel_action[2*i] : sel_action[2*i+1];
       end
+      en_obs = 1'b1;
     end
     default: begin
-      for(unsigned int i = 0; i < 16; ++i) begin
+      for(int i = 0; i < 16; ++i) begin
         sel_reward[i] <= 16'b0;
         sel_action[i] <= sel_action[i];
       end
+      en_obs = 1'b0;
     end
   endcase
 end
 
 always_comb begin
   if (state == STATE_STOP) begin
-    action = point_action[sel_action[0]];
+    out_action = point_action[sel_action[0]];
   end
 end
 

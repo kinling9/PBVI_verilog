@@ -1,10 +1,9 @@
-module random_gen16
-  (
-  input logic       clk,
-  input logic       rst_n,
+module random_gen16 (
+  input logic clk,
+  input logic rst_n,
   input logic [15:0] seed,
   output logic [15:0] data
-  );
+);
 
 // 16-bit LFSR generate with a user specified seed
 	parameter BITS = 16;	
