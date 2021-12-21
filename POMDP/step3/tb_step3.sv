@@ -10,11 +10,11 @@ module tb_step3;
   logic clk;
   logic rst_n;
   logic en;
-  logic [15:0] gamma_action_belief [2:0][15:0][1:0];
-  logic [15:0] point_belief [15:0][1:0];
+  logic [15:0] gamma_action_belief [0:2][0:15][0:1];
+  logic [15:0] point_belief [0:15][0:1];
   logic en_loop;
-  logic [1:0] point_action [15:0];
-  logic [15:0] alpha [15:0][1:0];
+  logic [1:0] point_action [0:15];
+  logic [15:0] alpha [0:15][0:1];
 
   int counter_finish;
 

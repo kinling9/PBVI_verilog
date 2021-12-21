@@ -15,7 +15,8 @@ module tb_step1;
   logic [15:0] trans [0:2][0:1][0:1];
   logic [15:0] observe [0:2][0:1][0:1];
   logic en_step1;
-  logic [15:0] gamma_intermediate_action_observation_alpha[2:0][1:0][15:0][1:0];
+  logic [15:0] gamma_intermediate_action_observation_alpha [0:2][0:1][0:15][0:1];
+  int counter_finish = 0;
 
   step1 DUT (.*);
 
@@ -55,11 +56,12 @@ module tb_step1;
     en = 1'b0;
   end
 
-  // always@(posedge clk) begin
-	// 	counter_finish = counter_finish + 1;
-		
-	// 	if(counter_finish == 200) $finish;
-	// end
+  always@(posedge clk) begin
+		counter_finish = counter_finish + 1;
+		if (counter_finish == 15) begin
+      $finish;
+    end
+	end
 
   // always @(posedge clk) begin
   //   #5;
@@ -69,10 +71,5 @@ module tb_step1;
   //   $display("observation %d : %d" ,counter_finish, observation);
   //   $display("current reward %d : %d" ,counter_finish, reward);
   // end
-
-  // initial begin
-	// 	$dumpfile("sim_top.fsdb");
-	// 	$dumpvars(0, sim_top, tb_sim_top, PBVI_decision, PBVI_belief);
-	// end
 
 endmodule

@@ -7,13 +7,13 @@ module step1 (
   input logic [15:0] trans [0:2][0:1][0:1],
   input logic [15:0] observe [0:2][0:1][0:1],
   output logic en_step1,
-  output logic [15:0] gamma_intermediate_action_observation_alpha[2:0][1:0][15:0][1:0]
+  output logic [15:0] gamma_intermediate_action_observation_alpha [0:2][0:1][0:15][0:1]
 );
 parameter STATE_INIT = 1'b0;
 parameter STATE_STOP = 1'b1;
 
 logic state;
-logic [63:0] gamma_intermediate[2:0][1:0][15:0][1:0];
+logic [63:0] gamma_intermediate [0:2][0:1][0:15][0:1];
 always_ff @(posedge clk or negedge rst_n) begin
   if(!rst_n) begin
     state <= STATE_STOP;
