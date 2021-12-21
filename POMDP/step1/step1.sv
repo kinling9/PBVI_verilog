@@ -6,7 +6,7 @@ module step1 (
   input logic [15:0] alpha [0:15][0:1],
   input logic [15:0] trans [0:2][0:1][0:1],
   input logic [15:0] observe [0:2][0:1][0:1],
-  output logic en_step1,
+  output logic en_step2,
   output logic [15:0] gamma_intermediate_action_observation_alpha [0:2][0:1][0:15][0:1]
 );
 parameter STATE_INIT = 1'b0;
@@ -44,9 +44,9 @@ end
 
 always_comb begin
   if (state == STATE_INIT) begin
-    en_step1 = 1'b1;
+    en_step2 = 1'b1;
   end else if (state == STATE_STOP) begin
-    en_step1 = 1'b0;
+    en_step2 = 1'b0;
   end
 end
 

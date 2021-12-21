@@ -14,7 +14,7 @@ module tb_step2;
   logic [15:0] gamma_reward_action [0:2][0:1];
   logic [15:0] point_belief [0:15][0:1];
   logic en_step3;
-  logic [15:0] gamma_action_bilief [0:2][0:15][0:1];
+  logic [15:0] gamma_action_belief [0:2][0:15][0:1];
 
   int counter_finish;
 
@@ -166,7 +166,7 @@ module tb_step2;
 
   always @(posedge clk) begin
     #5;
-    $display("point_action %d : %p\n" ,counter_finish, gamma_action_bilief);
+    $display("point_action %d : %p\n" ,counter_finish, gamma_action_belief);
     $display("en_loop %d : %d\n" ,counter_finish, en_step3);
   end
 

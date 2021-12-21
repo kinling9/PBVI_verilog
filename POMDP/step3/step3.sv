@@ -17,8 +17,8 @@ parameter STATE_LEVEL2 = 3'b010;
 parameter STATE_STOP = 3'b011;
 
 logic [2:0] state;
-logic [15:0] val[0:15];
-logic [15:0] max_val[0:15];
+logic [31:0] val[0:15];
+logic [31:0] max_val[0:15];
 
 always_ff @(posedge clk or negedge rst_n) begin
   if(!rst_n) begin
