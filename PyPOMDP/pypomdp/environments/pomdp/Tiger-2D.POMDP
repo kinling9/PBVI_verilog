@@ -26,15 +26,15 @@ uniform
 O: open-right
 uniform
 
-R: listen : tiger-left : * : * -1
+R: listen : tiger-left : * : * 0.099
 
-R: listen : tiger-right : * : * -1
+R: listen : tiger-right : * : * 0.099
 
-R: open-left : tiger-left : * : * -100
+R: open-left : tiger-left : * : * 0
 
-R: open-left : tiger-right : * : * 10
+R: open-left : tiger-right : * : * 0.110
 
-R: open-right : tiger-left : * : * 10 
+R: open-right : tiger-left : * : * 0.110 
 
-R: open-right : tiger-right : * : * -100
+R: open-right : tiger-right : * : * 0
 

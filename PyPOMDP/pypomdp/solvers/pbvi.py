@@ -108,6 +108,10 @@ class PBVI(Solver):
         #     if (tmp[np.argmax(tmp)] != tmp[i]):
         #         print("error")
         for av in self.alpha_vecs:
+            print([round(i*2**16) for i in av.v])
+        for av in self.alpha_vecs:
+            print(av.action)
+        for av in self.alpha_vecs:
             v = np.dot(av.v, belief)
             if v > max_v:
                 max_v = v
