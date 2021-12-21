@@ -363,5 +363,7 @@ class PomdpParser:
     def generate_belief_points(self, stepsize):
         # must be many better ways to do it
         # beliefs = [[random.uniform() for s in self.states] for p in arange(0., 1. + stepsize, stepsize)]
-        beliefs = [[p, 1-p] for p in arange(0., 1. + stepsize, stepsize)]
+        # beliefs = [[p, 1-p] for p in arange(0., 1. + stepsize, stepsize)]
+        stepsize = 1/16.
+        beliefs = [[p, 1-p] for p in arange(1/32., 1., stepsize)]
         return array(beliefs)
