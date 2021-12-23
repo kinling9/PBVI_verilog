@@ -34,7 +34,7 @@ always_ff @(posedge clk or negedge rst_n) begin
     state <= state + 1; 
   end
 end
-
+//i:belief j:alpha k:action l:observation
 always_comb begin
   if (state == STATE_INIT) begin
     for(int i = 0; i < 16; ++i) begin
@@ -58,20 +58,20 @@ always_comb begin
     STATE_LEVEL1: begin
       for(int i = 0; i < 16; ++i) begin
         for(int j = 0; j < 8; ++j) begin
-            for(int k=0; k < 2; ++k) begin
-                for(int l=0; l < 3; ++l) begin
-                    sel_dot[l][k][j][i] = 
-                    (gamma_intermediate_dot_point_belief[l][k][2*j][i] >= 
-                     gamma_intermediate_dot_point_belief[l][k][2*j+1][i]) ?
-                     gamma_intermediate_dot_point_belief[l][k][2*j][i] :
-                     gamma_intermediate_dot_point_belief[l][k][2*j+1][i];
-                    sel_alpha_idx[l][k][j][i] =
-                    (gamma_intermediate_dot_point_belief[l][k][2*j][i] >= 
-                     gamma_intermediate_dot_point_belief[l][k][2*j+1][i]) ?
-                     alpha_idx[l][k][2*j][i] :
-                     alpha_idx[l][k][2*j+1][i];
-                end
+          for(int k=0; k < 2; ++k) begin
+            for(int l=0; l < 3; ++l) begin
+                sel_dot[l][k][j][i] <= 
+                (gamma_intermediate_dot_point_belief[l][k][2*j][i] >= 
+                  gamma_intermediate_dot_point_belief[l][k][2*j+1][i]) ?
+                  gamma_intermediate_dot_point_belief[l][k][2*j][i] :
+                  gamma_intermediate_dot_point_belief[l][k][2*j+1][i];
+                sel_alpha_idx[l][k][j][i] <=
+                (gamma_intermediate_dot_point_belief[l][k][2*j][i] >= 
+                  gamma_intermediate_dot_point_belief[l][k][2*j+1][i]) ?
+                  alpha_idx[l][k][2*j][i] :
+                  alpha_idx[l][k][2*j+1][i];
             end
+          end
         end
       end
     end
@@ -80,12 +80,12 @@ always_comb begin
         for(int j = 0; j < 4; ++j) begin
             for(int k=0; k < 2; ++k) begin
                 for(int l=0; l < 3; ++l) begin
-                    sel_dot[l][k][j][i] = 
+                    sel_dot[l][k][j][i] <= 
                     (sel_dot[l][k][2*j][i] >= 
                      sel_dot[l][k][2*j+1][i]) ?
                      sel_dot[l][k][2*j][i] :
                      sel_dot[l][k][2*j+1][i];
-                    sel_alpha_idx[l][k][j][i] =
+                    sel_alpha_idx[l][k][j][i] <=
                     (sel_dot[l][k][2*j][i] >= 
                      sel_dot[l][k][2*j+1][i]) ?
                      sel_alpha_idx[l][k][2*j][i] :
@@ -100,12 +100,12 @@ always_comb begin
         for(int j = 0; j < 2; ++j) begin
             for(int k=0; k < 2; ++k) begin
                 for(int l=0; l < 3; ++l) begin
-                    sel_dot[l][k][j][i] = 
+                    sel_dot[l][k][j][i] <= 
                     (sel_dot[l][k][2*j][i] >= 
                      sel_dot[l][k][2*j+1][i]) ?
                      sel_dot[l][k][2*j][i] :
                      sel_dot[l][k][2*j+1][i];
-                    sel_alpha_idx[l][k][j][i] =
+                    sel_alpha_idx[l][k][j][i] <=
                     (sel_dot[l][k][2*j][i] >= 
                      sel_dot[l][k][2*j+1][i]) ?
                      sel_alpha_idx[l][k][2*j][i] :
@@ -120,12 +120,12 @@ always_comb begin
         for(int j = 0; j < 1; ++j) begin
             for(int k=0; k < 2; ++k) begin
                 for(int l=0; l < 3; ++l) begin
-                    sel_dot[l][k][j][i] = 
+                    sel_dot[l][k][j][i] <= 
                     (sel_dot[l][k][2*j][i] >= 
                      sel_dot[l][k][2*j+1][i]) ?
                      sel_dot[l][k][2*j][i] :
                      sel_dot[l][k][2*j+1][i];
-                    sel_alpha_idx[l][k][j][i] =
+                    sel_alpha_idx[l][k][j][i] <=
                     (sel_dot[l][k][2*j][i] >= 
                      sel_dot[l][k][2*j+1][i]) ?
                      sel_alpha_idx[l][k][2*j][i] :
@@ -140,8 +140,8 @@ always_comb begin
         for(int j = 0; j<16; ++j) begin
           for(int k = 0; k<2; ++k) begin
             for(int l = 0; l<3; ++l) begin
-                sel_dot[l][k][j][i] = 16'b0;
-                //sel_alpha_idx[l][k][j][i]= sel_alpha_idx[l][k][j][i];
+                // sel_dot[l][k][j][i] = 16'b0;
+                // sel_alpha_idx[l][k][j][i]= sel_alpha_idx[l][k][j][i];
             end
           end
         end
