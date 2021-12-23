@@ -5,7 +5,7 @@ module time_unit;
 	initial $timeformat(-9,1," ns",9);
 endmodule
 
-module tb_solve_pbvi;
+module tb_whole_flow;
 
   logic clk;
   logic rst_n;
@@ -21,20 +21,16 @@ module tb_solve_pbvi;
   logic [15:0] alpha_out [0:15][0:1];
   int counter_finish = 0;
 
-  solve_pbvi DUT (
-    .clk(clk),
-    .rst_n(rst_n),
-    .en(en),
-    .max_iter(max_iter),
-    .discount(discount),
-    .alpha_in(alpha_in),
-    .vec_reward(vec_reward),
-    .trans(trans),
-    .observe(observe),
-    .en_solved(en_solved),
-    .point_action(point_action),
-    .alpha_out(alpha_out)
-  );
+  logic initial_state;
+  logic [15:0] seed0;
+  logic [15:0] seed1;
+  logic [15:0] initial_belief [0:1];
+  logic [1:0] action;
+  logic observation;
+  logic cur_state;
+  logic [31:0] reward;
+
+  whole_flow DUT (.*);
 
   initial begin
     clk = 1'b0;
@@ -57,6 +53,9 @@ module tb_solve_pbvi;
                '{0, 0},'{0, 0},'{0, 0},'{0, 0},
                '{0, 0},'{0, 0},'{0, 0},'{0, 0}};
     vec_reward = '{{7209,0},{0,7209},{6488,6488}};
+    seed0 = 16'ha24b;
+    seed1 = 16'hc354;
+    initial_state = 1'b0;
 
   end
 
@@ -80,7 +79,7 @@ module tb_solve_pbvi;
 
   always@(posedge clk) begin
 		counter_finish = counter_finish + 1;
-		if (counter_finish == 100) begin
+		if (counter_finish == 150) begin
       $finish;
     end
 	end

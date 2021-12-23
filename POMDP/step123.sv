@@ -12,28 +12,28 @@ module step123 (
   output logic [15:0] alpha_out [0:15][0:1]
 );
 
-parameter STATE_INIT = 3'b000;
-parameter STATE_WAIT = 3'b001;
-parameter STATE_STOP = 3'b010;
+// parameter STATE_INIT = 3'b000;
+// parameter STATE_WAIT = 3'b001;
+// parameter STATE_STOP = 3'b010;
 
-logic state;
+//logic state;
 logic en_step2;
 logic en_step3;
 logic [15:0] gamma_intermediate_action_observation_alpha [0:2][0:1][0:15][0:1];
 logic [15:0] point_belief [0:15][0:1];
 logic [15:0] gamma_action_belief [0:2][0:15][0:1];
 
-always_ff @(posedge clk or negedge rst_n) begin
-  if(!rst_n) begin
-    state <= STATE_STOP;
-  end else if (en) begin
-    state <= STATE_INIT;
-  end else if (state == STATE_STOP) begin
-    state <= STATE_STOP;
-  end else begin
-    state <= state + 1; 
-  end
-end
+// always_ff @(posedge clk or negedge rst_n) begin
+//   if(!rst_n) begin
+//     state <= STATE_STOP;
+//   end else if (en) begin
+//     state <= STATE_INIT;
+//   end else if (state == STATE_STOP) begin
+//     state <= STATE_STOP;
+//   end else begin
+//     state <= state + 1; 
+//   end
+// end
 
 always_comb begin : gen_point_belief
   for(int i = 0; i < 16; ++i) begin

@@ -1,8 +1,8 @@
-`include "PBVI_decision.sv"
-`include "PBVI_belief.sv"
-`include "obs_gen.sv"
-`include "state_gen.sv"
-`include "random_gen16.sv"
+// `include "PBVI_decision.sv"
+// `include "PBVI_belief.sv"
+// `include "obs_gen.sv"
+// `include "state_gen.sv"
+// `include "random_gen16.sv"
 
 module sim_top (
   input logic clk,
