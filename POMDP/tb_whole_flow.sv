@@ -17,7 +17,7 @@ module tb_whole_flow;
   logic [15:0] trans [0:2][0:1][0:1];
   logic [15:0] observe [0:2][0:1][0:1];
   logic [1:0] point_action [0:15];
-  logic [15:0] alpha_out [0:15][0:1];
+  //logic [15:0] alpha_out [0:15][0:1];
   int counter_finish = 0;
 
   logic initial_state;
