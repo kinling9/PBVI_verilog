@@ -22,7 +22,6 @@ module whole_flow (
 logic en_solved;
 logic [1:0] point_action [0:15];
 logic [15:0] alpha_out [0:15][0:1];
-logic wire
 
 solve_pbvi mod_solve_pbvi (
   .clk(clk),

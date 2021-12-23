@@ -1,5 +1,5 @@
 `timescale 1ns/10ps
-`include "sim_top.sv"
+//`include "sim_top.sv"
 
 module time_unit;
 	initial $timeformat(-9,1," ns",9);
@@ -83,8 +83,8 @@ module tb_sim_top;
   end
 
   initial begin
-		$dumpfile("sim_top.fsdb");
-		$dumpvars(0, sim_top, tb_sim_top, PBVI_decision, PBVI_belief);
+		// $dumpfile("sim_top.fsdb");
+		// $dumpvars(0, sim_top, tb_sim_top, PBVI_decision, PBVI_belief);
 	end
 
 endmodule

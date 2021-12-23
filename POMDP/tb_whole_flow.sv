@@ -16,7 +16,6 @@ module tb_whole_flow;
   logic [15:0] vec_reward [0:2][0:1];
   logic [15:0] trans [0:2][0:1][0:1];
   logic [15:0] observe [0:2][0:1][0:1];
-  logic en_solved;
   logic [1:0] point_action [0:15];
   logic [15:0] alpha_out [0:15][0:1];
   int counter_finish = 0;
@@ -53,6 +52,7 @@ module tb_whole_flow;
                '{0, 0},'{0, 0},'{0, 0},'{0, 0},
                '{0, 0},'{0, 0},'{0, 0},'{0, 0}};
     vec_reward = '{{7209,0},{0,7209},{6488,6488}};
+    initial_belief = {16'h8000,16'h8000};
     seed0 = 16'ha24b;
     seed1 = 16'hc354;
     initial_state = 1'b0;
