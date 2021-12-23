@@ -33,7 +33,7 @@ always_comb begin
         for(int k=0; k < 2; ++k) begin
           for(int l=0; l < 3; ++l) begin
             gamma_intermediate[l][k][j][i] = 
-            ((trans[l][i][0]*observe[i][k][0]*alpha[j][0] + trans[l][i][1]*observe[i][k][1]*alpha[j][1])*discount);
+            ((trans[l][i][0]*observe[l][k][0]*alpha[j][0] + trans[l][i][1]*observe[l][k][1]*alpha[j][1])*discount);
             gamma_intermediate_action_observation_alpha[l][k][j][i] = gamma_intermediate[l][k][j][i][63-:16];
           end
         end

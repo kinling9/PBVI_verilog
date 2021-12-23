@@ -10,11 +10,11 @@ module step3 (
 );
 
 parameter STATE_INIT = 3'b000;
-parameter STATE_LEVEL1 = 3'b001;
-parameter STATE_LEVEL2 = 3'b010;
-//parameter STATE_LEVEL3 = 3'b011;
+parameter STATE_LEVEL0 = 3'b001;
+parameter STATE_LEVEL1 = 3'b010;
+parameter STATE_LEVEL2 = 3'b011;
 //parameter STATE_LEVEL4 = 3'b100;
-parameter STATE_STOP = 3'b011;
+parameter STATE_STOP = 3'b100;
 
 logic [2:0] state;
 logic [31:0] val[0:15];
@@ -34,7 +34,7 @@ end
 
 always_comb begin
   case (state)
-   STATE_INIT: begin
+   STATE_LEVEL0: begin
      for(int i = 0; i < 16; ++i) begin
         val[i]=point_belief[i][0]*gamma_action_belief[0][i][0]+point_belief[i][1]*gamma_action_belief[0][i][1];
         max_val[i]=val[i];
@@ -66,8 +66,8 @@ always_comb begin
       for(int i = 0; i < 16; ++i) begin
         val[i] <= 16'b0;
         max_val[i] <= 16'b0;
-        alpha[i]=alpha[i];
-        point_action[i]=point_action[i];
+        //alpha[i] <= 0;
+        //point_action[i] <=0;
       end
     end
   endcase

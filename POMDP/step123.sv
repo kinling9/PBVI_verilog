@@ -37,8 +37,8 @@ end
 
 always_comb begin : gen_point_belief
   for(int i = 0; i < 16; ++i) begin
-    point_belief[i][0] = i*16'h1000;
-    point_belief[i][1] = 16'hffff - point_belief[i][0];
+    point_belief[i][0] = i*16'h1000 + 16'h800;
+    point_belief[i][1] = 16'hffff - point_belief[i][0] + 1;
   end
 end
 step1 mod_step1(

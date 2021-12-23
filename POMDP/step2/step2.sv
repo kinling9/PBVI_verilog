@@ -151,7 +151,7 @@ always_comb begin
 end
 
 always_comb begin
-  if (state == STATE_STOP) begin
+  //if (state == STATE_STOP) begin
     for(int i = 0; i < 16; ++i) begin
       for(int l = 0; l < 3; ++l) begin
         for(int s = 0; s < 2; ++s) begin
@@ -162,7 +162,7 @@ always_comb begin
         end
       end
     end
-  end
+  //end
 end
 
 always_comb begin
