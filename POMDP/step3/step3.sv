@@ -64,8 +64,8 @@ always_comb begin
    end
    default: begin
       for(int i = 0; i < 16; ++i) begin
-        val[i] <= 16'b0;
-        max_val[i] <= 16'b0;
+        val[i] = 16'b0; //from <= to =
+        max_val[i] = 16'b0; //from <= to =
         //alpha[i] <= 0;
         //point_action[i] <=0;
       end

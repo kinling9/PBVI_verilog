@@ -42,7 +42,7 @@ always_comb begin
         for(int j = 0; j < 16; ++j) begin
             for(int k = 0; k < 2; ++k) begin
                 for(int l = 0; l<3; ++l) begin
-                    gamma_intermediate_dot_point_belief[l][k][i][j] =
+                    gamma_intermediate_dot_point_belief[l][k][i][j] <= //from = to <=
                     gamma_intermediate_action_observation_alpha[l][k][j][0]*point_belief[i][0] +
                     gamma_intermediate_action_observation_alpha[l][k][j][1]*point_belief[i][1];
                     sel_alpha_idx[l][k][i][j] <= j;
@@ -135,7 +135,7 @@ always_comb begin
       for(int i = 0; i < 16; ++i) begin
         for(int l = 0; l < 3; ++l) begin
           for(int s = 0; s < 2; ++s) begin
-            gamma_action_belief[l][i][s] = 
+            gamma_action_belief[l][i][s] <=  //from = to <=
             gamma_reward_action[l][s] +
             gamma_intermediate_action_observation_alpha[l][0][sel_alpha_idx[l][0][i][0]][s] +
             gamma_intermediate_action_observation_alpha[l][1][sel_alpha_idx[l][1][i][0]][s];
