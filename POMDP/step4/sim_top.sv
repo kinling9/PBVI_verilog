@@ -64,7 +64,7 @@ always_ff @(posedge clk or negedge rst_n) begin
   end
 end
 
-always_ff @(posedge clk or negedge rst_n) begin
+always_ff @(posedge clk) begin
   if (state == STATE_INIT) begin
     en_decision <= 1'b1;
     cur_state <= initial_state;

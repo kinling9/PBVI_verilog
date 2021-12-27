@@ -53,7 +53,7 @@ always_ff @(posedge clk or negedge rst_n) begin
   end
 end
 
-always_ff @(posedge clk or negedge rst_n) begin
+always_ff @(posedge clk) begin
   case (state)
     STATE_INIT: begin
       count <= 0;
@@ -65,9 +65,7 @@ always_ff @(posedge clk or negedge rst_n) begin
     end
     STATE_LOOP_WAIT: begin
       en_step123 <= 1'b0;
-      if (en_loop) begin 
-        alpha_cur_in <= alpha_out;
-      end
+      alpha_cur_in <= en_loop ? alpha_out : alpha_cur_in;
     end
     STATE_LOOP_STOP: begin
       //alpha_out <= alpha_cur_out;
